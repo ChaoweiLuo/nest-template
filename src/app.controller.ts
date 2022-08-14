@@ -1,6 +1,7 @@
-import { Controller, Get, Inject } from '@nestjs/common';
+import { Controller, Get, Inject, UseGuards } from '@nestjs/common';
 import Redis from 'ioredis';
 import { AppService } from './app.service';
+import { AuthGuard } from './enhance/auth.guard';
 
 @Controller()
 export class AppController {
@@ -11,13 +12,18 @@ export class AppController {
 
   @Get()
   async getHello() {
-    return await this.redis.get("name");
+    return await this.redis.get('name');
     return this.appService.getHello();
   }
 
-  @Get("set")
+  @Get('set')
   async setHello() {
-    return await this.redis.set("name", "Nestjs");
+    return await this.redis.set('name', 'Nestjs');
   }
 
+  @UseGuards(AuthGuard)
+  @Get('auth')
+  async test() {
+    return await this.redis.get('name');
+  }
 }
