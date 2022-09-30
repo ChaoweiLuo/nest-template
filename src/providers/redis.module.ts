@@ -6,13 +6,11 @@ const redisProviders = [
   {
     provide: 'REDIS_CLIENT',
     useFactory: (configService: ConfigService) =>{
-      console.log({
-        host: configService.get<string>('REDIS_HOST'),
-        port: configService.get<number>('REDIS_PORT'),
-        password: configService.get<string>('REDIS_PASSWORD'),
-        // username: configService.get<string>('REDIS_USER'),
-        db: +configService.get<string>('REDIS_DB') || 0,
-      })
+      const path = configService.get("REDIS_URL");
+      const db = +configService.get<string>('REDIS_DB') || 0;
+      if(path) {
+        return new Redis(path, { db });
+      }
       let redis = new Redis({
         host: configService.get<string>('REDIS_HOST'),
         port: configService.get<number>('REDIS_PORT'),
