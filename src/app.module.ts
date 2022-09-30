@@ -15,7 +15,7 @@ import { UserModule } from './user/user.module';
     ConfigModule.forRoot({
       envFilePath: '.env',
     }),
-    RedisModule,
+    // RedisModule,
     UserModule,
   ],
   controllers: [AppController],
