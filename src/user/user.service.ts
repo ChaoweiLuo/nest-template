@@ -16,8 +16,8 @@ export class UserService {
     return 'This action adds a new user';
   }
 
-  findAll() {
-    return this.userModel.find().limit(5)
+  findAll(limit: number = 5) {
+    return this.userModel.find().limit(limit)
     return `This action returns all user`;
   }
 
